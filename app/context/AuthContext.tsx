@@ -9,7 +9,7 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../firebase";
 
 interface AuthContext {
   user: User | null | undefined;
@@ -25,7 +25,7 @@ interface AuthProviderProps {
 
 export function AuthProvider(props: AuthProviderProps): JSX.Element {
   const {children} = props;
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(undefined);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
