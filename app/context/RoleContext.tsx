@@ -26,6 +26,8 @@ export function RoleProvider({ children }: RoleProviderProps) {
         if (storedRole === 'patient' || storedRole === 'clinician') {
             setRoleState(storedRole);
         }
+    } else {
+        setRoleState(null);
     }
   }, [user]);
 
