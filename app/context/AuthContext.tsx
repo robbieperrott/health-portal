@@ -34,6 +34,14 @@ export function AuthProvider(props: AuthProviderProps): JSX.Element {
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    const logIdToken = async (user: User) => {
+      const token = await user.getIdToken();
+      console.log(`User ID Token: ${token.slice(0,10)}`)
+    }
+    if (user) logIdToken(user);
+  }, [user]);
+
   const signIn = () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
