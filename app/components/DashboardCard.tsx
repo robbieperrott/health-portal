@@ -1,23 +1,26 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HealthMetric } from "../types";
+import { getHealthMetricTitle, getHealthMetricUnit } from "../utils";
 
 interface DashboardCardProps {
-    title: string;
+    metric: HealthMetric;
     value: number;
-    unit: string;
+    selected: boolean;
+    onSelect: () => void;
 }
 
 export default function DashboardCard(props: DashboardCardProps) {
-    const {title, value, unit} = props;
+    const {metric, value, selected, onSelect} = props;
 
-    return <Card className="w-full gap-2">
+    return <Card className={`w-full gap-2 ${!selected && "hover:shadow-lg"} ${selected && "bg-muted"}`} onClick={onSelect}>
       <CardHeader>
-        <CardTitle className="text-xl font-bold">{title}</CardTitle>
+        <CardTitle className="text-xl font-bold">{getHealthMetricTitle(metric)}</CardTitle>
       </CardHeader>
       <CardContent className="flex gap-2 items-end">
         <div className="font-bold text-4xl">
             {value}
         </div>
-        {unit}
+        {getHealthMetricUnit(metric)}
       </CardContent>
     </Card>
 }
