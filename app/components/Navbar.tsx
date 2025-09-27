@@ -36,9 +36,9 @@ export default function Navbar() {
             </NavigationMenuList>
         </NavigationMenu>
         <NavigationMenu>
-            <NavigationMenuList className="flex gap-8 w-full">
-                {role ? < NavigationMenuItem><RoleToggle value={role} onChange={setRole}/></NavigationMenuItem> : <></>}
+            <NavigationMenuList className="flex gap-2 w-full">
                 {user === undefined ? <></> : user === null ? <NavigationMenuItem><SignInButton /></NavigationMenuItem> : <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>}
+                {role ? <NavigationMenuItem><RoleToggle/></NavigationMenuItem> : <></>}
                 <ThemeToggle/>
             </NavigationMenuList>
         </NavigationMenu>
