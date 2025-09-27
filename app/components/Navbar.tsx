@@ -16,11 +16,18 @@ export default function Navbar() {
     const {role} = useRole();
 
     return <div className="flex items-center justify-between border-b h-16 px-4">
-        {(role && user !== undefined) && <><NavigationMenu>
-            <NavigationMenuList className="flex p-2 w-full">
+        {(user !== undefined) && <>
+       <NavigationMenu>
+            {role && 
+            <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/">Dashboard</Link>
+                        <Link href="/dashboard">Dashboard</Link>
+                    </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+                        <Link href="/">AI Assistant</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 {role === "clinician" && <NavigationMenuItem>
@@ -28,12 +35,7 @@ export default function Navbar() {
                         <Link href="/">Patient Lookup</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>}
-                <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/">AI Assistant</Link>
-                    </NavigationMenuLink>
-                </NavigationMenuItem>
-            </NavigationMenuList>
+            </NavigationMenuList>}
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
