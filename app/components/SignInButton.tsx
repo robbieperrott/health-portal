@@ -1,12 +1,10 @@
-'use client';
+import { NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { useAuth } from "../context/AuthContext";
 
-import { Button } from '@/components/ui/button';
-import { useAuth } from '../context/AuthContext';
+export default function SignInButton() {
+    const { signIn } = useAuth();
 
-export default function Login() {
-  const { signIn } = useAuth();
-
-  return (
-    <Button onClick={signIn}>Sign in</Button>
-  );
+    return <NavigationMenuLink asChild onClick={signIn} className={navigationMenuTriggerStyle()}>
+        <div>Sign in</div>
+    </NavigationMenuLink>
 }

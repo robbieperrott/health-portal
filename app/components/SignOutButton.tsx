@@ -1,9 +1,11 @@
-"use client"
-import { Button } from "@/components/ui/button";
+import { NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { useAuth } from "../context/AuthContext";
+import { Button } from "@/components/ui/button";
 
 export default function SignOutButton() {
-    const {signOut} = useAuth();
+    const { signOut} = useAuth();
 
-    return <Button onClick={signOut}>Sign out</Button>
+    return <NavigationMenuLink onClick={signOut} asChild className={navigationMenuTriggerStyle()}>
+        <Button variant="secondary">Sign out</Button>
+    </NavigationMenuLink>
 }
