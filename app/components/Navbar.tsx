@@ -13,10 +13,10 @@ import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar() {
     const {user} = useAuth();
-    const {role, setRole} = useRole();
+    const {role} = useRole();
 
     return <div className="flex items-center justify-between border-b h-16 px-4">
-        <NavigationMenu>
+        {(role && user !== undefined) && <><NavigationMenu>
             <NavigationMenuList className="flex p-2 w-full">
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -37,11 +37,13 @@ export default function Navbar() {
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
-                {user === undefined ? <></> : user === null ? <NavigationMenuItem><SignInButton /></NavigationMenuItem> : <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>}
-                {role ? <NavigationMenuItem><RoleToggle/></NavigationMenuItem> : <></>}
+                <NavigationMenuItem>
+                    {user === null ? <SignInButton /> : <SignedIn user={user}/>}
+                </NavigationMenuItem>
+                <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
                 <ThemeToggle/>
             </NavigationMenuList>
-        </NavigationMenu>
+        </NavigationMenu></>}
     </div>
 }
 
