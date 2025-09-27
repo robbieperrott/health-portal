@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import {RoleProvider} from "./context/RoleContext";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,18 +27,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+       
       <AuthProvider>
         <RoleProvider>
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
-            <div className="flex flex-col w-full h-screen">
-              <Navbar/>
-              <div className="flex justify-center h-full p-12">
-                {children}
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="flex flex-col w-full h-screen">
+                <Navbar/>
+                <div className="flex justify-center h-full p-12">
+                  {children}
+                </div>
               </div>
-            </div>
+             </ThemeProvider>
           </body>
         </RoleProvider>
       </AuthProvider>

@@ -9,6 +9,7 @@ import Link from "next/link";
 import SignInButton from "./SignInButton";
 import RoleToggle from "./RoleToggle";
 import SignOutButton from "./SignOutButton";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function Navbar() {
     const {user} = useAuth();
@@ -36,12 +37,9 @@ export default function Navbar() {
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-8 w-full">
-                <NavigationMenuItem>
-                    {role ? <RoleToggle value={role} onChange={setRole}/> : <></>}
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    {user === undefined ? <></> : user === null ? <SignInButton /> : <SignedIn user={user}/>}
-                </NavigationMenuItem>
+                {role ? < NavigationMenuItem><RoleToggle value={role} onChange={setRole}/></NavigationMenuItem> : <></>}
+                {user === undefined ? <></> : user === null ? <NavigationMenuItem><SignInButton /></NavigationMenuItem> : <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>}
+                <ThemeToggle/>
             </NavigationMenuList>
         </NavigationMenu>
     </div>
