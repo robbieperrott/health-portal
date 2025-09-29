@@ -2,7 +2,7 @@ import { HealthMetric } from "./types";
 
 export function getHealthMetricTitle(metric: HealthMetric) {
   if (metric === "heartRate") {
-    return "Heart Rate";
+    return "Average Heart Rate";
   } else if (metric === "stepCount") {
     return "Step Count";
   } else if (metric === "sleepScore") {
