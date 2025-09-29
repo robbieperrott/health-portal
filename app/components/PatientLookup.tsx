@@ -11,6 +11,7 @@ import {
 import {patients} from "../api/mockPatientData";
 import { Input } from "@/components/ui/input";
 import { ChangeEvent, useEffect, useState } from "react";
+import { Label } from "@/components/ui/label";
 
 export function PatientLookup() {
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -42,11 +43,12 @@ export function PatientLookup() {
 
     return (
         <div className="space-y-6 w-full">
-            <div>
+            <div className="space-y-3">
+                <Label htmlFor="patient-search">Search Patients</Label>
                 <Input
                     id="patient-search"
-                    className="w-[400px]"
-                    placeholder="Search patient data..."
+                    className="w-[500px]"
+                    placeholder="Enter a patient's ID, name, phone number, or medical aid number..."
                     value={searchTerm}
                     onChange={handleSearchChange}
                 />
