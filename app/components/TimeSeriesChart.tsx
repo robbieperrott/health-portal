@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { timeSeriesData as data } from "../api/mockData";
+import { timeSeriesData } from "../api/mockData";
 import { HealthMetric } from "../types";
 import { getHealthMetricTitle, getHealthMetricUnit } from "../utils";
+
+export type DateRange = {startDate: Date; endDate: Date};
 
 export type TimeSeriesData = {
     date: Date;
@@ -12,18 +14,23 @@ export type TimeSeriesData = {
 }
 
 interface Props {
+  dateRange: DateRange | null;
   selectedMetric: HealthMetric;
 }
 
-export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }: Props) {
+export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const data = timeSeriesData.filter(dataPoint => dateRange === null || (
+        dataPoint.date >= dateRange.startDate && dataPoint.date <= dateRange.endDate
+    ))
+
     if (!data || data.length === 0) return;
 
-    const width = 1000;
-    const height = 400;
+    const width = 1200;
+    const height = 350;
     const margin = { top: 40, right: 40, bottom: 40, left: 60 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -39,7 +46,7 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d[selectedHealthMetric])!])
+      .domain([0, d3.max(data, (d) => d[selectedMetric])!])
       .nice()
       .range([innerHeight, 0]);
 
@@ -47,13 +54,13 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
     const line = d3
       .line<TimeSeriesData>()
       .x((d) => x(d.date))
-      .y((d) => y(d[selectedHealthMetric]))
+      .y((d) => y(d[selectedMetric]))
       .curve(d3.curveMonotoneX);
 
-    const colorMap: Record<typeof selectedHealthMetric, string> = {
-      heartRate: "#e63946",
-      stepCount: "#457b9d",
-      sleepScore: "#2a9d8f",
+    const colorMap: Record<typeof selectedMetric, string> = {
+      heartRate: "var(--chart-1)",
+      stepCount:  "var(--chart-2)",
+      sleepScore:  "var(--chart-3)",
     };
 
     const svg = d3
@@ -76,7 +83,7 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
     g.append("path")
       .datum(data)
       .attr("fill", "none")
-      .attr("stroke", colorMap[selectedHealthMetric])
+      .attr("stroke", colorMap[selectedMetric])
       .attr("stroke-width", 2)
       .attr("d", line);
     
@@ -86,16 +93,16 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
       .enter()
       .append("circle")
       .attr("cx", (d) => x(d.date))
-      .attr("cy", (d) => y(d[selectedHealthMetric]))
+      .attr("cy", (d) => y(d[selectedMetric]))
       .attr("r", 4)
-      .attr("fill", colorMap[selectedHealthMetric])
+      .attr("fill", colorMap[selectedMetric])
       .on("mouseover", (event, d) => {
         const tooltip = d3.select(tooltipRef.current);
         tooltip
           .style("opacity", 1)
           .html(
             `<strong>${d.date.toDateString()}</strong><br/>
-             ${getHealthMetricTitle(selectedHealthMetric)}: ${d[selectedHealthMetric]} ${getHealthMetricUnit(selectedHealthMetric)}`
+             ${getHealthMetricTitle(selectedMetric)}: ${d[selectedMetric]} ${getHealthMetricUnit(selectedMetric)}`
           )
           .style("left", event.pageX + 10 + "px")
           .style("top", event.pageY - 28 + "px");
@@ -109,7 +116,7 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
       .on("mouseout", () => {
         d3.select(tooltipRef.current).style("opacity", 0);
       });
-  }, [data, selectedHealthMetric]);
+  }, [timeSeriesData, selectedMetric, dateRange]);
 
   return <div>
       <svg ref={svgRef}></svg>
@@ -119,10 +126,11 @@ export default function TimeSeriesChart({ selectedMetric: selectedHealthMetric }
           position: "absolute",
           pointerEvents: "none",
           background: "var(--primary)",
-          color: "white",
+          color: "var(--background)",
           padding: "6px 10px",
           borderRadius: "4px",
           fontSize: "12px",
+          opacity: 0,
           transition: "opacity 0.2s ease",
         }}
       />
