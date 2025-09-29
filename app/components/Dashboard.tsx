@@ -1,12 +1,12 @@
 "use client"
 
-import DashboardCard from "../../components/DashboardCard";
+import DashboardCard from "./DashboardCard";
 import { useState } from "react";
-import { HealthMetric } from "../../types";
-import DashboardChartCard from "../../components/DashboardChartCard";
-import {timeSeriesData} from "../../api/mockTimeSeriesData";
+import { HealthMetric } from "../types";
+import DashboardChartCard from "./DashboardChartCard";
+import {timeSeriesData} from "../api/mockTimeSeriesData";
 
-export default function DashboardPage() {
+export default function Dashboard() {
     const [selectedMetric, setSelectedMetric] = useState<HealthMetric>("heartRate");
 
     const todaysData = timeSeriesData[timeSeriesData.length - 1];

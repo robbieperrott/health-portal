@@ -6,7 +6,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "firebase/auth";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Link from "next/link";
-import SignInButton from "./SignInButton";
 import RoleToggle from "./RoleToggle";
 import SignOutButton from "./SignOutButton";
 import ThemeToggle from "./ThemeToggle";
@@ -16,13 +15,13 @@ export default function Navbar() {
     const {role} = useRole();
 
     return <div className="flex items-center justify-between border-b min-h-16 px-4">
-        {(user !== undefined) && <>
+        {(user) && <>
        <NavigationMenu>
             {role && 
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/dashboard">Dashboard</Link>
+                        <Link href="/">Dashboard</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -39,11 +38,9 @@ export default function Navbar() {
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
-                <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
-                <ThemeToggle/>
-                <NavigationMenuItem>
-                    {user === null ? <SignInButton /> : <SignedIn user={user}/>}
-                </NavigationMenuItem>
+                    <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
+                    <NavigationMenuItem><ThemeToggle/></NavigationMenuItem>
+                    <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu></>}
     </div>
