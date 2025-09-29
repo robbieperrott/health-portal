@@ -4,7 +4,7 @@ import DashboardCard from "../components/DashboardCard";
 import { useState } from "react";
 import { HealthMetric } from "../types";
 import DashboardChartCard from "../components/DashboardChartCard";
-import {timeSeriesData} from "../api/mockData";
+import {timeSeriesData} from "../api/mockTimeSeriesData";
 
 export default function DashboardPage() {
     const [selectedMetric, setSelectedMetric] = useState<HealthMetric>("heartRate");

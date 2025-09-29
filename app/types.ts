@@ -10,3 +10,10 @@ export type TimeSeriesData = {
   stepCount: number;
   sleepScore: number;
 };
+
+export type Patient = {
+  id: string;
+  name: string;
+  medicalAid: string;
+  phone: string;
+};

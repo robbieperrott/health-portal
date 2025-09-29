@@ -32,7 +32,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
                 {role === "clinician" && <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/">Patient Lookup</Link>
+                        <Link href="/patient-lookup">Patient Lookup</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>}
             </NavigationMenuList>}

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { timeSeriesData } from "../api/mockData";
+import { timeSeriesData } from "../api/mockTimeSeriesData";
 import { DateRange, HealthMetric, TimeSeriesData } from "../types";
 import { getHealthMetricTitle, getHealthMetricUnit } from "../utils";
 
