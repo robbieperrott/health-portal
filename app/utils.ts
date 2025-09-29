@@ -1,21 +1,21 @@
 import { HealthMetric } from "./types";
 
 export function getHealthMetricTitle(metric: HealthMetric) {
-  if (metric === "heart-rate") {
+  if (metric === "heartRate") {
     return "Heart Rate";
-  } else if (metric === "step-count") {
+  } else if (metric === "stepCount") {
     return "Step Count";
-  } else if (metric === "sleep-score") {
+  } else if (metric === "sleepScore") {
     return "Sleep Score";
   }
 }
 
 export function getHealthMetricUnit(metric: HealthMetric) {
-  if (metric === "heart-rate") {
+  if (metric === "heartRate") {
     return "BPM";
-  } else if (metric === "step-count") {
-    return "Steps";
-  } else if (metric === "sleep-score") {
+  } else if (metric === "stepCount") {
+    return "steps";
+  } else if (metric === "sleepScore") {
     return "%";
   }
 }

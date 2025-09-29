@@ -5,40 +5,33 @@ import DashboardCard from "../components/DashboardCard";
 import { useState } from "react";
 import { HealthMetric } from "../types";
 import { getHealthMetricTitle } from "../utils";
+import DashboardChartCard from "../components/DashboardChartCard";
 
 export default function DashboardPage() {
-    const [selectedMetric, setSelectedMetric] = useState<HealthMetric>("heart-rate");
+    const [selectedMetric, setSelectedMetric] = useState<HealthMetric>("heartRate");
     
     return <div className="w-full h-full flex flex-col gap-12">
         <div className="flex w-full gap-8 h-fit">
             <DashboardCard
-                metric="heart-rate"
+                metric="heartRate"
                 value={70}
-                selected={selectedMetric === "heart-rate"}
-                onSelect={() => setSelectedMetric("heart-rate")}
+                selected={selectedMetric === "heartRate"}
+                onSelect={() => setSelectedMetric("heartRate")}
             />
             <DashboardCard
-                metric="step-count"
+                metric="stepCount"
                 value={10000}
-                selected={selectedMetric === "step-count"}
-                onSelect={() => setSelectedMetric("step-count")}
+                selected={selectedMetric === "stepCount"}
+                onSelect={() => setSelectedMetric("stepCount")}
             />
             <DashboardCard
-                metric="sleep-score"
+                metric="sleepScore"
                 value={90}
-                selected={selectedMetric === "sleep-score"}
-                onSelect={() => setSelectedMetric("sleep-score")}
+                selected={selectedMetric === "sleepScore"}
+                onSelect={() => setSelectedMetric("sleepScore")}
             />
         </div>
-        <Card className="h-full">
-            <CardHeader>
-                <CardTitle className="text-xl font-bold">{getHealthMetricTitle(selectedMetric)}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex gap-2 items-end">
-                (Chart)
-            </CardContent>
-
-        </Card>
+        <DashboardChartCard metric={selectedMetric}/>
     </div>
 }
 
