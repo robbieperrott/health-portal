@@ -15,7 +15,7 @@ const initialMessages: Message[] = [
   { id: uuidv4(), role: "assistant", text: "Hi! Ask me a question." },
 ];
 
-export default function MockChat() {
+export default function AiAssistant() {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
