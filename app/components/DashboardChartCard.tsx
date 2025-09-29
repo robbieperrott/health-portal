@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getHealthMetricTitle } from "../utils";
-import { HealthMetric } from "../types";
-import TimeSeriesChart, { DateRange } from "./TimeSeriesChart";
+import { DateRange, HealthMetric } from "../types";
+import TimeSeriesChart from "./TimeSeriesChart";
 import { useState } from "react";
 import DateRangeSelect, { DateFilter } from "./DateFilterSelect";
 

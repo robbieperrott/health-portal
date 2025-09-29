@@ -1,17 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import { timeSeriesData } from "../api/mockData";
-import { HealthMetric } from "../types";
+import { DateRange, HealthMetric, TimeSeriesData } from "../types";
 import { getHealthMetricTitle, getHealthMetricUnit } from "../utils";
-
-export type DateRange = {startDate: Date; endDate: Date};
-
-export type TimeSeriesData = {
-    date: Date;
-    heartRate: number;
-    stepCount: number;
-    sleepScore: number;
-}
 
 interface Props {
   dateRange: DateRange | null;
