@@ -1,21 +1,178 @@
-export interface TimeSeriesData {
-  date: Date;
-  heartRate: number;
-  stepCount: number;
-  sleepScore: number;
-}
+import { TimeSeriesData } from "../types";
 
-export const timeSeriesData: TimeSeriesData[] = Array.from(
-  { length: 50 },
-  (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() - i);
-
-    return {
-      date,
-      heartRate: Math.floor(60 + Math.random() * 60), // 60–100 bpm
-      stepCount: Math.floor(3000 + Math.random() * 7000), // 3k–10k steps
-      sleepScore: Math.floor(50 + Math.random() * 50), // 50–100 score
-    };
-  }
-).reverse();
+export const timeSeriesData: TimeSeriesData[] = [
+  {
+    date: new Date("2025-09-29"),
+    heartRate: 68,
+    stepCount: 4269,
+    sleepScore: 73,
+  },
+  {
+    date: new Date("2025-09-28"),
+    heartRate: 78,
+    stepCount: 7687,
+    sleepScore: 64,
+  },
+  {
+    date: new Date("2025-09-27"),
+    heartRate: 84,
+    stepCount: 7119,
+    sleepScore: 74,
+  },
+  {
+    date: new Date("2025-09-26"),
+    heartRate: 63,
+    stepCount: 8286,
+    sleepScore: 69,
+  },
+  {
+    date: new Date("2025-09-25"),
+    heartRate: 66,
+    stepCount: 11471,
+    sleepScore: 64,
+  },
+  {
+    date: new Date("2025-09-24"),
+    heartRate: 70,
+    stepCount: 5628,
+    sleepScore: 61,
+  },
+  {
+    date: new Date("2025-09-23"),
+    heartRate: 86,
+    stepCount: 11974,
+    sleepScore: 84,
+  },
+  {
+    date: new Date("2025-09-22"),
+    heartRate: 70,
+    stepCount: 6829,
+    sleepScore: 70,
+  },
+  {
+    date: new Date("2025-09-21"),
+    heartRate: 71,
+    stepCount: 6204,
+    sleepScore: 82,
+  },
+  {
+    date: new Date("2025-09-20"),
+    heartRate: 73,
+    stepCount: 9511,
+    sleepScore: 65,
+  },
+  {
+    date: new Date("2025-09-19"),
+    heartRate: 83,
+    stepCount: 9366,
+    sleepScore: 91,
+  },
+  {
+    date: new Date("2025-09-18"),
+    heartRate: 69,
+    stepCount: 8885,
+    sleepScore: 70,
+  },
+  {
+    date: new Date("2025-09-17"),
+    heartRate: 72,
+    stepCount: 11546,
+    sleepScore: 94,
+  },
+  {
+    date: new Date("2025-09-16"),
+    heartRate: 82,
+    stepCount: 10178,
+    sleepScore: 79,
+  },
+  {
+    date: new Date("2025-09-15"),
+    heartRate: 64,
+    stepCount: 8893,
+    sleepScore: 92,
+  },
+  {
+    date: new Date("2025-09-14"),
+    heartRate: 75,
+    stepCount: 11374,
+    sleepScore: 72,
+  },
+  {
+    date: new Date("2025-09-13"),
+    heartRate: 71,
+    stepCount: 11983,
+    sleepScore: 65,
+  },
+  {
+    date: new Date("2025-09-12"),
+    heartRate: 79,
+    stepCount: 11979,
+    sleepScore: 88,
+  },
+  {
+    date: new Date("2025-09-11"),
+    heartRate: 67,
+    stepCount: 5066,
+    sleepScore: 70,
+  },
+  {
+    date: new Date("2025-09-10"),
+    heartRate: 85,
+    stepCount: 10648,
+    sleepScore: 77,
+  },
+  {
+    date: new Date("2025-09-09"),
+    heartRate: 87,
+    stepCount: 10045,
+    sleepScore: 75,
+  },
+  {
+    date: new Date("2025-09-08"),
+    heartRate: 62,
+    stepCount: 8420,
+    sleepScore: 65,
+  },
+  {
+    date: new Date("2025-09-07"),
+    heartRate: 69,
+    stepCount: 4192,
+    sleepScore: 91,
+  },
+  {
+    date: new Date("2025-09-06"),
+    heartRate: 81,
+    stepCount: 10563,
+    sleepScore: 71,
+  },
+  {
+    date: new Date("2025-09-05"),
+    heartRate: 74,
+    stepCount: 10391,
+    sleepScore: 74,
+  },
+  {
+    date: new Date("2025-09-04"),
+    heartRate: 77,
+    stepCount: 8210,
+    sleepScore: 83,
+  },
+  {
+    date: new Date("2025-09-03"),
+    heartRate: 63,
+    stepCount: 5888,
+    sleepScore: 85,
+  },
+  {
+    date: new Date("2025-09-02"),
+    heartRate: 88,
+    stepCount: 4550,
+    sleepScore: 91,
+  },
+  {
+    date: new Date("2025-09-01"),
+    heartRate: 65,
+    stepCount: 6896,
+    sleepScore: 84,
+  },
+];
