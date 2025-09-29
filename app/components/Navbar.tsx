@@ -9,7 +9,7 @@ import Link from "next/link";
 import SignInButton from "./SignInButton";
 import RoleToggle from "./RoleToggle";
 import SignOutButton from "./SignOutButton";
-import { ThemeToggle } from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navbar() {
     const {user} = useAuth();
@@ -39,11 +39,11 @@ export default function Navbar() {
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
+                <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
+                <ThemeToggle/>
                 <NavigationMenuItem>
                     {user === null ? <SignInButton /> : <SignedIn user={user}/>}
                 </NavigationMenuItem>
-                <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
-                <ThemeToggle/>
             </NavigationMenuList>
         </NavigationMenu></>}
     </div>
@@ -57,10 +57,10 @@ function SignedIn(props: SignedInProps) {
     const {user} = props;
 
     return <div className="flex gap-2 items-center">
-        <Avatar>
+        <SignOutButton/>
+         <Avatar>
             <AvatarImage src={user.photoURL ?? ""} alt="@shadcn" />
             <AvatarFallback>{user.displayName?.charAt(0)}</AvatarFallback>
         </Avatar>
-        <SignOutButton/>
     </div>
 }
