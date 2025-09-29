@@ -15,7 +15,7 @@ export default function Navbar() {
     const {user} = useAuth();
     const {role} = useRole();
 
-    return <div className="flex items-center justify-between border-b h-16 px-4">
+    return <div className="flex items-center justify-between border-b min-h-16 px-4">
         {(user !== undefined) && <>
        <NavigationMenu>
             {role && 
