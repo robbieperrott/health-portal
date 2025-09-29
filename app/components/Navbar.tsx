@@ -27,7 +27,7 @@ export default function Navbar() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/">AI Assistant</Link>
+                        <Link href="/ai-assistant">AI Assistant</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>
                 {role === "clinician" && <NavigationMenuItem>
