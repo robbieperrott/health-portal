@@ -12,9 +12,9 @@ interface Props {
 }
 
 const MARGIN = { top: 40, right: 40, bottom: 40, left: 60 };
-const DEFAULT_ASPECT_RATIO = 18 / 5;
-const DEFAULT_MIN_HEIGHT = 260;
-const DEFAULT_MAX_HEIGHT = 520;
+const ASPECT_RATIO = 18 / 5;
+const MIN_HEIGHT = 260;
+const MAX_HEIGHT = 520;
 
 export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -23,7 +23,7 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
 
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
-    height: DEFAULT_MIN_HEIGHT,
+    height: MIN_HEIGHT,
   });
 
   // Observe parent width and compute height automatically
@@ -35,10 +35,10 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
       const rect = entries[0].contentRect;
       const nextWidth = Math.floor(rect.width);
       let nextHeight =
-        nextWidth > 0 ? nextWidth / DEFAULT_ASPECT_RATIO : DEFAULT_MIN_HEIGHT;
+        nextWidth > 0 ? nextWidth / ASPECT_RATIO : MIN_HEIGHT;
       nextHeight = Math.max(
-        DEFAULT_MIN_HEIGHT,
-        Math.min(DEFAULT_MAX_HEIGHT, Math.round(nextHeight))
+        MIN_HEIGHT,
+        Math.min(MAX_HEIGHT, Math.round(nextHeight))
       );
 
       setSize((prev) =>
