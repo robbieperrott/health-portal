@@ -14,10 +14,12 @@ export default function Navbar() {
     const {user} = useAuth();
     const {role} = useRole();
 
+    if (!user || !role) {
+        return null;
+    }
+
     return <div className="flex items-center justify-between border-b min-h-16 px-4">
-        {(user) && <>
        <NavigationMenu>
-            {role && 
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -34,7 +36,7 @@ export default function Navbar() {
                         <Link href="/patient-lookup">Patient Lookup</Link>
                     </NavigationMenuLink>
                 </NavigationMenuItem>}
-            </NavigationMenuList>}
+            </NavigationMenuList>
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
@@ -42,7 +44,7 @@ export default function Navbar() {
                     <NavigationMenuItem><ThemeToggle/></NavigationMenuItem>
                     <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>
             </NavigationMenuList>
-        </NavigationMenu></>}
+        </NavigationMenu>
     </div>
 }
 

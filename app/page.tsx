@@ -11,7 +11,7 @@ export default function Home() {
 
   if (user === null) {
     return (
-      <Card className="max-w-2xs h-fit">
+      <div className="flex w-full h-2/3 items-center justify-center"><Card className="max-w-2xs h-fit">
         <CardHeader>
           <CardTitle className="text-xl font-bold text-center">Welcome to the health portal</CardTitle>
         </CardHeader>
@@ -19,7 +19,7 @@ export default function Home() {
           <p>Please sign in to view and manage your health data.</p>
           <SignInButton autofocus variant="default"/>
         </CardContent>
-      </Card>
+      </Card></div>
     );
   }
 
