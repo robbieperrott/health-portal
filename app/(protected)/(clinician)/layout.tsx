@@ -1,4 +1,3 @@
-"use client";
 import ClinicianGuard from "./ClinicianGuard";
 
 export default function ClinicianLayout({
