@@ -54,7 +54,9 @@ function SignedIn(props: SignedInProps) {
     const {user} = props;
 
     return <div className="flex gap-2 items-center">
-        <SignOutButton/>
+        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
+            <SignOutButton variant="secondary"/>
+        </NavigationMenuLink>
          <Avatar>
             <AvatarImage src={user.photoURL ?? ""} alt="@shadcn" />
             <AvatarFallback>{user.displayName?.charAt(0)}</AvatarFallback>
