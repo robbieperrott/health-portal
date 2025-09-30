@@ -13,14 +13,14 @@ export default function AuthGuard({ children }: Props) {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (u) => {
-      setUser(u);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
       setChecking(false);
-      if (!u) {
-        router.replace("/"); // always redirect to "/"
+      if (!user) {
+        router.replace("/");
       }
     });
-    return () => unsub();
+    return () => unsubscribe();
   }, [router]);
 
   if (checking) {
