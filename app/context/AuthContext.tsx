@@ -9,7 +9,7 @@ import {
   User,
   UserCredential,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "@/lib/firebase";
 
 interface AuthContext {
   user: User | null | undefined;
