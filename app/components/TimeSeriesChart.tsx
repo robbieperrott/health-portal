@@ -12,7 +12,7 @@ interface Props {
 }
 
 const MARGIN = { top: 40, right: 40, bottom: 40, left: 60 };
-const DEFAULT_ASPECT_RATIO = 16 / 5;
+const DEFAULT_ASPECT_RATIO = 18 / 5;
 const DEFAULT_MIN_HEIGHT = 260;
 const DEFAULT_MAX_HEIGHT = 520;
 
