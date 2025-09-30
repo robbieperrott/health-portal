@@ -53,7 +53,7 @@ export default function PatientPage() {
                     onChange={handleSearchChange}
                 />
             </div>
-            <div className="h-fill">
+            <div className="h-fill pb-12">
                 <Table>
                 <TableHeader>
                     <TableRow>

@@ -26,10 +26,12 @@ export default function DashboardCard(props: DashboardCardProps) {
           onSelect();
         }
       }}
-      className={`w-full gap-2 outline-none 
-        ${!selected && "hover:shadow-lg"} 
-        ${selected && "bg-muted"} 
-        focus:ring rounded-lg`}
+      className={`
+        w-full gap-2 outline-none rounded-lg transition
+        ${selected ? "bg-muted" : "hover:bg-accent hover:text-accent-foreground"}
+        focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+        focus-visible:outline-none
+      `}
     >
       <CardHeader>
         <CardTitle className="text-xl font-bold">{getHealthMetricTitle(metric)}</CardTitle>
