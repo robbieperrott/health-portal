@@ -14,7 +14,23 @@ interface DashboardCardProps {
 export default function DashboardCard(props: DashboardCardProps) {
     const {metric, value, selected, onSelect} = props;
 
-    return <Card className={`w-full gap-2 ${!selected && "hover:shadow-lg"} ${selected && "bg-muted"}`} onClick={onSelect}>
+    return <Card
+      role="button"
+      tabIndex={0}
+      aria-pressed={selected}
+      aria-label={`${getHealthMetricTitle(metric)}: ${value} ${getHealthMetricUnit(metric)}`}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault(); // prevent page scroll on Space
+          onSelect();
+        }
+      }}
+      className={`w-full gap-2 outline-none 
+        ${!selected && "hover:shadow-lg"} 
+        ${selected && "bg-muted"} 
+        focus:ring rounded-lg`}
+    >
       <CardHeader>
         <CardTitle className="text-xl font-bold">{getHealthMetricTitle(metric)}</CardTitle>
       </CardHeader>
