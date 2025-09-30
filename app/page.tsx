@@ -2,20 +2,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "./context/AuthContext";
 import Dashboard from "./components/Dashboard";
+import SignInButton from "./components/SignInButton";
 
 export default function Home() {
-  const {user, signIn} = useAuth();
+  const {user} = useAuth();
   
-  if (user === undefined) return;
+  if (user === undefined) return null;
 
   if (user === null) {
     return (
-      <Card className="max-w-sm h-fit">
+      <Card className="max-w-2xs h-fit">
         <CardHeader>
           <CardTitle className="text-xl font-bold text-center">Welcome to the health portal</CardTitle>
         </CardHeader>
-        <CardContent>
-          <>Please <a className="hover:text-primary font-bold cursor-pointer" onClick={signIn}>sign in</a> to view and manage your health data.</>
+        <CardContent className="flex flex-col gap-8 justify-center">
+          <p>Please sign in to view and manage your health data.</p>
+          <SignInButton autofocus variant="default"/>
         </CardContent>
       </Card>
     );
