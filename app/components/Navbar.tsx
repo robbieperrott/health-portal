@@ -19,7 +19,7 @@ export default function Navbar() {
     }
 
     return <div className="flex items-center justify-between border-b min-h-16 px-4">
-       <NavigationMenu>
+        <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
                     <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
@@ -40,8 +40,8 @@ export default function Navbar() {
         </NavigationMenu>
         <NavigationMenu>
             <NavigationMenuList className="flex gap-2 w-full">
-                    <NavigationMenuItem><RoleToggle/></NavigationMenuItem>
-                    <NavigationMenuItem><ThemeToggle/></NavigationMenuItem>
+                    <NavigationMenuItem aria-label="role-toggle"><RoleToggle/></NavigationMenuItem>
+                    <NavigationMenuItem aria-label="theme-toggle"><ThemeToggle/></NavigationMenuItem>
                     <NavigationMenuItem><SignedIn user={user}/></NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>
