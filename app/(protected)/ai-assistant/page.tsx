@@ -93,7 +93,7 @@ export default function AiAssistant() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={onKeyDown}
             />
-            <Button onClick={() => send(input)} className="rounded-xl" disabled={!input.trim()}>
+            <Button onClick={() => send(input)} className="rounded-xl" disabled={!input.trim() || isSending}>
               Ask
             </Button>
           </div>
