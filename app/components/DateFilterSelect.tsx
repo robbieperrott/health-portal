@@ -1,3 +1,5 @@
+"use client";
+
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export type DateFilter = "7-days" | "14-days" | "28-days" | "all-time";

@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getHealthMetricTitle } from "../utils";
 import { DateRange, HealthMetric } from "../types";
@@ -39,8 +41,7 @@ export default function DashboardChartCard(props: DashboardChartCardProps) {
             <CardTitle className="text-xl font-bold">{getHealthMetricTitle(metric)} Over Time</CardTitle>
             <DateRangeSelect value={dateFilter} onChange={setDateFilter}/>
         </CardHeader>
-        <CardContent className="">
-            
+        <CardContent>
             <TimeSeriesChart
                 dateRange={getDateRange()}
                 selectedMetric={metric}

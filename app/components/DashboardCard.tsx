@@ -1,3 +1,5 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HealthMetric } from "../types";
 import { getHealthMetricTitle, getHealthMetricUnit } from "../utils";

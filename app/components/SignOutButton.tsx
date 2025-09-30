@@ -1,3 +1,5 @@
+"use client"
+
 import { NavigationMenuLink, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { useAuth } from "../context/AuthContext";
 import { Button } from "@/components/ui/button";
