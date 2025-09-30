@@ -1,6 +1,6 @@
 # Solution
 
-I created a [next.js](https://nextjs.org/) app and made use of [shadcn](https://ui.shadcn.com/) components and [D3](https://d3js.org/) charts.
+You can see a demo video of my app here: https://www.loom.com/share/59102776c9cd4a57b9245fbd7622cab5?sid=8b35d87e-d3e0-41bd-828c-2f1c2a40ebdf
 
 ## Authentication
 
