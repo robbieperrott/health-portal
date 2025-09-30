@@ -36,10 +36,14 @@ There is a theme toggle that allows the user to select between light, dark, and 
 
 I kept all layouts server-side as per next.js best practices by wrapping them in providers / guards. That way the children passed into the layout can remain server components.
 
+## Accessibility
+
+The user can navigate through the application using the keyboard. Mostly this was provided by using shadcn components. I did have to make the dashboard Card components accessible though, since usually they are not clickable, but in this case they are. So I added a tab index so that the cards can be navigated to using the tab / shift + tab keys, an event handler for when enter / space is hit while the Card is in focus, aria properties, and a focus ring for sighted keyboard users.
+
 ## Areas for improvement
 
-- I did not have time to meet the accessibility requirements. This is something I need to work on and take into account as I code, rather trying to add on at the end of a project.
 - I did not have time to implement three of the four nice-to-haves: persisting chat history, suspense / streaming for the AI response, or UI tests.
 - A very large portion of the app is client components. This was quite difficult to avoid, since almost every component is interactive in some way, or requires authentication. One way to address this would be to move authentication to the server side, so that components that need to check authentication don't have to call the <code>useAuth()</code> hook and therefore be rendered on the client side. I'm sure there are other ways I could make the client components smaller given more time and thought.
 - It could be worth using a query parameter instead of <code>useState</code> for the search term on the Patient Lookup page. This would allow clinicians to share the URL of a filtered patient table with other clinicians (provided they have access to the same patient data)
 - I would have liked to programmatically generate the mock time series data, and fetch today's data by matching on date, rather than relying on the fact that the mock data happens to be sorted by date.
+- The app wasn't designed with mobile in mind, so the elements don't fit well on mobile screens, but this could be changed.
