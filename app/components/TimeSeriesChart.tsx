@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from "react";
+"use client";
+
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import * as d3 from "d3";
 import { timeSeriesData } from "../api/mockTimeSeriesData";
 import { DateRange, HealthMetric, TimeSeriesData } from "../types";
@@ -9,37 +11,83 @@ interface Props {
   selectedMetric: HealthMetric;
 }
 
+const MARGIN = { top: 40, right: 40, bottom: 40, left: 60 };
+const DEFAULT_ASPECT_RATIO = 16 / 5;
+const DEFAULT_MIN_HEIGHT = 260;
+const DEFAULT_MAX_HEIGHT = 520;
+
 export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
 
+  const [size, setSize] = useState<{ width: number; height: number }>({
+    width: 0,
+    height: DEFAULT_MIN_HEIGHT,
+  });
+
+  // Observe parent width and compute height automatically
   useEffect(() => {
-    const data = timeSeriesData.filter(dataPoint => dateRange === null || (
-        dataPoint.date >= dateRange.startDate && dataPoint.date <= dateRange.endDate
-    ))
+    const el = containerRef.current;
+    if (!el) return;
 
-    if (!data || data.length === 0) return;
+    const ro = new ResizeObserver((entries) => {
+      const rect = entries[0].contentRect;
+      const nextWidth = Math.floor(rect.width);
+      let nextHeight =
+        nextWidth > 0 ? nextWidth / DEFAULT_ASPECT_RATIO : DEFAULT_MIN_HEIGHT;
+      nextHeight = Math.max(
+        DEFAULT_MIN_HEIGHT,
+        Math.min(DEFAULT_MAX_HEIGHT, Math.round(nextHeight))
+      );
 
-    const width = 1200;
-    const height = 350;
-    const margin = { top: 40, right: 40, bottom: 40, left: 60 };
-    const innerWidth = width - margin.left - margin.right;
-    const innerHeight = height - margin.top - margin.bottom;
+      setSize((prev) =>
+        prev.width !== nextWidth || prev.height !== nextHeight
+          ? { width: nextWidth, height: nextHeight }
+          : prev
+      );
+    });
 
-    // Clear previous render
-    d3.select(svgRef.current).selectAll("*").remove();
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
-    // Scales
-    const x = d3
-      .scaleTime()
-      .domain(d3.extent(data, (d) => d.date) as [Date, Date])
-      .range([0, innerWidth]);
+  const data = useMemo<TimeSeriesData[]>(
+    () =>
+      timeSeriesData.filter(
+        (d) =>
+          dateRange === null ||
+          (d.date >= dateRange.startDate && d.date <= dateRange.endDate)
+      ),
+    [dateRange]
+  );
 
-    const y = d3
-      .scaleLinear()
-      .domain([0, d3.max(data, (d) => d[selectedMetric])!])
-      .nice()
-      .range([innerHeight, 0]);
+  useEffect(() => {
+    const { width, height } = size;
+    if (!svgRef.current || width <= 0 || height <= 0 || data.length === 0) return;
+
+    const innerWidth = Math.max(0, width - MARGIN.left - MARGIN.right);
+    const innerHeight = Math.max(0, height - MARGIN.top - MARGIN.bottom);
+
+    const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
+
+    svg
+      .attr("width", "100%")
+      .attr("height", height)
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet");
+
+    const g = svg
+      .append("g")
+      .attr("transform", `translate(${MARGIN.left},${MARGIN.top})`);
+
+    const xExtent = d3.extent(data, (d) => d.date);
+    if (!xExtent[0] || !xExtent[1]) return;
+    const x = d3.scaleTime().domain([xExtent[0], xExtent[1]]).range([0, innerWidth]);
+
+    const yMax = d3.max(data, (d) => d[selectedMetric]) ?? 0;
+    const y = d3.scaleLinear().domain([0, yMax]).nice().range([innerHeight, 0]);
 
     // Line generator
     const line = d3
@@ -48,26 +96,16 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
       .y((d) => y(d[selectedMetric]))
       .curve(d3.curveMonotoneX);
 
-    const colorMap: Record<typeof selectedMetric, string> = {
+    const colorMap: Record<HealthMetric, string> = {
       heartRate: "var(--chart-1)",
-      stepCount:  "var(--chart-2)",
-      sleepScore:  "var(--chart-3)",
+      stepCount: "var(--chart-2)",
+      sleepScore: "var(--chart-3)",
     };
-
-    const svg = d3
-      .select(svgRef.current)
-      .attr("width", width)
-      .attr("height", height);
-
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Axes
     g.append("g")
       .attr("transform", `translate(0,${innerHeight})`)
-      .call(d3.axisBottom(x).ticks(6));
-
+      .call(d3.axisBottom(x).ticks(Math.max(3, Math.floor(innerWidth / 160))));
     g.append("g").call(d3.axisLeft(y));
 
     // Line
@@ -77,8 +115,10 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
       .attr("stroke", colorMap[selectedMetric])
       .attr("stroke-width", 2)
       .attr("d", line);
-    
+
     // Circles with tooltips
+    const tooltipSel = d3.select(tooltipRef.current);
+
     g.selectAll("circle")
       .data(data)
       .enter()
@@ -88,29 +128,30 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
       .attr("r", 4)
       .attr("fill", colorMap[selectedMetric])
       .on("mouseover", (event, d) => {
-        const tooltip = d3.select(tooltipRef.current);
-        tooltip
+        tooltipSel
           .style("opacity", 1)
           .html(
-            `<strong>${d.date.toDateString()}</strong><br/>
-             ${getHealthMetricTitle(selectedMetric)}: ${d[selectedMetric]} ${getHealthMetricUnit(selectedMetric)}`
-          )
-          .style("left", event.pageX + 10 + "px")
-          .style("top", event.pageY - 28 + "px");
+            `<strong>${d.date.toDateString()}</strong><br/>${getHealthMetricTitle(
+              selectedMetric
+            )}: ${d[selectedMetric]} ${getHealthMetricUnit(selectedMetric)}`
+          );
       })
       .on("mousemove", (event) => {
-        const tooltip = d3.select(tooltipRef.current);
-        tooltip
-          .style("left", event.pageX + 10 + "px")
-          .style("top", event.pageY - 28 + "px");
+        const host = containerRef.current;
+        if (!host) return;
+        const rect = host.getBoundingClientRect();
+        const left = event.clientX - rect.left + 10;
+        const top = event.clientY - rect.top - 28;
+        tooltipSel.style("left", `${left}px`).style("top", `${top}px`);
       })
       .on("mouseout", () => {
-        d3.select(tooltipRef.current).style("opacity", 0);
+        tooltipSel.style("opacity", 0);
       });
-  }, [timeSeriesData, selectedMetric, dateRange]);
+  }, [size, data, selectedMetric]);
 
-  return <div>
-      <svg ref={svgRef}></svg>
+  return (
+    <div ref={containerRef} style={{ position: "relative", width: "100%" }}>
+      <svg ref={svgRef} />
       <div
         ref={tooltipRef}
         style={{
@@ -125,5 +166,6 @@ export default function TimeSeriesChart({ dateRange, selectedMetric }: Props) {
           transition: "opacity 0.2s ease",
         }}
       />
-    </div>;
+    </div>
+  );
 }
